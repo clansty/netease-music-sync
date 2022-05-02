@@ -8,7 +8,6 @@
     "module": "CommonJS",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "lib": ["ESNext"],
     "typeRoots": ["node_modules/@types", "src/types"]
   },
   "exclude": ["node_modules"]

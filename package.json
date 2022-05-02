@@ -6,16 +6,23 @@
   "keywords": [],
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "login": "ts-node src/login.ts"
   },
   "engines": {
     "node": ">=10"
   },
   "devDependencies": {
     "@types/node": "^17.0.31",
+    "@types/prompts": "^2",
     "ts-node": "^10.7.0",
     "tsc": "^2.0.4",
     "typescript": "^4.6.4"
   },
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.0",
+  "dependencies": {
+    "NeteaseCloudMusicApi": "^4.5.12",
+    "dotenv": "^16.0.0",
+    "prompts": "^2.4.2"
+  }
 }
