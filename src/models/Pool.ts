@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { Writable } from 'stream';
 import id3 from 'node-id3';
+import MetaFlac from 'metaflac-js2';
 
 export class Pool {
   public constructor(public readonly dir) {
@@ -80,6 +81,24 @@ export class Pool {
         }
         console.log(tags);
         id3.update(tags, fileAbsPath);
+        break;
+      }
+      case 'flac': {
+        // AnyScript 坏，没别的库好用了😭
+        const flac = new MetaFlac(fileAbsPath);
+        if (!flac.getTag('TITLE')) {
+          flac.setTag('TITLE=' + title);
+        }
+        if (!flac.getTag('ARTIST')) {
+          flac.setTag('ARTIST=' + artists.join('/'));
+        }
+        if (!flac.getTag('ALBUM')) {
+          flac.setTag('ALBUM=' + album);
+        }
+        const image = await fetch(picUrl);
+        // macOS 显示不了 flac 的封面，是 macOS 的问题
+        flac.importPicture(Buffer.from(await image.arrayBuffer()));
+        flac.save();
         break;
       }
     }

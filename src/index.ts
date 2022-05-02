@@ -10,7 +10,7 @@ const playlists = process.env.PLAYLISTS.split(',');
 (async () => {
   // 坏诶，是 anyScript
   // const uid = (await nease.login_status({ cookie }) as any).body.data.account.id;
-  const detail = await nease.song_detail({ cookie, ids: '451110639' });
+  const detail = await nease.song_detail({ cookie, ids: '1420502946' });
   const song = detail.body.songs[0];
   console.log(song);
   const download = (await nease.song_download_url({ cookie, id: song.id })).body.data as any;
