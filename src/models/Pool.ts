@@ -5,8 +5,8 @@ import { Writable } from 'stream';
 import id3 from 'node-id3';
 import MetaFlac from 'metaflac-js2';
 
-export class Pool {
-  public constructor(public readonly dir) {
+export default class Pool {
+  public constructor(public readonly dir: string) {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
@@ -14,34 +14,34 @@ export class Pool {
 
   public exists(id: string | number) {
     if (fs.existsSync(path.join(this.dir, id + '.flac'))) {
-      return id + '.flac';
+      return 'flac';
     }
     if (fs.existsSync(path.join(this.dir, id + '.mp3'))) {
-      return id + '.mp3';
+      return 'mp3';
     }
     if (fs.existsSync(path.join(this.dir, id + '.wav'))) {
-      return id + '.wav';
+      return 'wav';
     }
     if (fs.existsSync(path.join(this.dir, id + '.wma'))) {
-      return id + '.wma';
+      return 'wma';
     }
     if (fs.existsSync(path.join(this.dir, id + '.m4a'))) {
-      return id + '.m4a';
+      return 'm4a';
     }
     if (fs.existsSync(path.join(this.dir, id + '.aac'))) {
-      return id + '.aac';
+      return 'aac';
     }
     if (fs.existsSync(path.join(this.dir, id + '.ogg'))) {
-      return id + '.ogg';
+      return 'ogg';
     }
     if (fs.existsSync(path.join(this.dir, id + '.ape'))) {
-      return id + '.ape';
+      return 'ape';
     }
     if (fs.existsSync(path.join(this.dir, id + '.opus'))) {
-      return id + '.opus';
+      return 'opus';
     }
     if (fs.existsSync(path.join(this.dir, id + '.aiff'))) {
-      return id + '.aiff';
+      return 'aiff';
     }
   }
 
@@ -50,57 +50,70 @@ export class Pool {
     const fileAbsPath = path.join(this.dir, `${id}.${type.toLowerCase()}`);
     if (fs.existsSync(fileAbsPath))
       return;
-    const fileStream = fs.createWriteStream(fileAbsPath);
-    const file = await fetch(url);
-    // @ts-ignore @types/node 该 18 了
-    await file.body.pipeTo(Writable.toWeb(fileStream));
+    try {
+      const fileStream = fs.createWriteStream(fileAbsPath);
+      const file = await fetch(url);
+      // @ts-ignore @types/node 该 18 了
+      await file.body.pipeTo(Writable.toWeb(fileStream));
+    }
+    catch (e) {
+      console.error('下载失败', e.message);
+      // 删除下载失败的文件
+      fs.unlinkSync(fileAbsPath);
+      // 同步的模块还需要处理下载失败，跳过链接
+      throw e;
+    }
 
     // 写入元数据
-    switch (type.toLowerCase()) {
-      case 'mp3': {
-        const orig = id3.read(fileAbsPath);
-        const tags: id3.Tags = {};
-        // 优先使用原先的
-        if (!orig.title) {
-          tags.title = title;
+    try {
+      switch (type.toLowerCase()) {
+        case 'mp3': {
+          const orig = id3.read(fileAbsPath);
+          const tags: id3.Tags = {};
+          // 优先使用原先的
+          if (!orig.title) {
+            tags.title = title;
+          }
+          if (!orig.artist) {
+            tags.artist = artists.join('/');
+          }
+          if (!orig.album) {
+            tags.album = album;
+          }
+          if (!orig.image) {
+            const image = await fetch(picUrl);
+            tags.image = {
+              mime: image.headers.get('content-type'),
+              type: { id: 3, name: 'front cover' },
+              description: undefined,
+              imageBuffer: Buffer.from(await image.arrayBuffer()),
+            };
+          }
+          id3.update(tags, fileAbsPath);
+          break;
         }
-        if (!orig.artist) {
-          tags.artist = artists.join('/');
-        }
-        if (!orig.album) {
-          tags.album = album;
-        }
-        if (!orig.image) {
+        case 'flac': {
+          // AnyScript 坏，没别的库好用了😭
+          const flac = new MetaFlac(fileAbsPath);
+          if (!flac.getTag('TITLE')) {
+            flac.setTag('TITLE=' + title);
+          }
+          if (!flac.getTag('ARTIST')) {
+            flac.setTag('ARTIST=' + artists.join('/'));
+          }
+          if (!flac.getTag('ALBUM')) {
+            flac.setTag('ALBUM=' + album);
+          }
           const image = await fetch(picUrl);
-          tags.image = {
-            mime: image.headers.get('content-type'),
-            type: { id: 3, name: 'front cover' },
-            description: undefined,
-            imageBuffer: Buffer.from(await image.arrayBuffer()),
-          };
+          // macOS 显示不了 flac 的封面，是 macOS 的问题
+          flac.importPicture(Buffer.from(await image.arrayBuffer()));
+          flac.save();
+          break;
         }
-        console.log(tags);
-        id3.update(tags, fileAbsPath);
-        break;
       }
-      case 'flac': {
-        // AnyScript 坏，没别的库好用了😭
-        const flac = new MetaFlac(fileAbsPath);
-        if (!flac.getTag('TITLE')) {
-          flac.setTag('TITLE=' + title);
-        }
-        if (!flac.getTag('ARTIST')) {
-          flac.setTag('ARTIST=' + artists.join('/'));
-        }
-        if (!flac.getTag('ALBUM')) {
-          flac.setTag('ALBUM=' + album);
-        }
-        const image = await fetch(picUrl);
-        // macOS 显示不了 flac 的封面，是 macOS 的问题
-        flac.importPicture(Buffer.from(await image.arrayBuffer()));
-        flac.save();
-        break;
-      }
+    }
+    catch (e) {
+      console.error('写入元数据失败', e.message);
     }
   }
 }
