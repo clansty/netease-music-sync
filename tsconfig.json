@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "incremental": true,
+    "target": "ESNext",
+    "outDir": "build",
+    "rootDir": "src",
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "lib": ["ESNext"],
+    "typeRoots": ["node_modules/@types", "src/types"]
+  },
+  "exclude": ["node_modules"]
+}
