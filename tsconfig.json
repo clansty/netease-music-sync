@@ -7,8 +7,9 @@
     "moduleResolution": "node",
     "module": "CommonJS",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "src/types"]
+    "resolveJsonModule": true
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
