@@ -1,5 +1,5 @@
 pkgname='netease-music-sync'
-pkgver=1.0.0.r1.gd401b7f
+pkgver=1.0.1.r0.0000000
 pkgrel=1
 pkgdesc='自动将网易云的歌单同步到本地'
 license=('MIT')
