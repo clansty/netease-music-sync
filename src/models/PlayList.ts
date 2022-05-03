@@ -48,7 +48,10 @@ export default class PlayList {
       const artists: string[] = song.pc?.ar ? [song.pc.ar] : song.ar.map(ar => ar.name);
       const album = song.pc?.alb || song.al.name;
       const picUrl = song.al.picUrl;
-      const fileNameBeforeExt = `${artists.join(' ')} - ${title}`.replace(/[\/\\]/g, '_');
+      let fileNameBeforeExt = `${artists.join(' ')} - ${title}`.replace(/[\/\\]/g, '_');
+      if(fileNameBeforeExt.length>200){
+        fileNameBeforeExt = `${artists[0]} 等${artists.length}只 - ${title}`.replace(/[\/\\]/g, '_');
+      }
 
       try {
         const type = this.pool.exists(id);
