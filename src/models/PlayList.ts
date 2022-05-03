@@ -37,6 +37,7 @@ export default class PlayList {
   }
 
   public async syncSongs() {
+    console.log('同步歌单:', this.name);
     const songs = await this.getAllSongs();
     // 这个用来在最后对比删除已经删除了的歌的链接
     const fileNamesInPlaylist: string[] = [];
@@ -79,5 +80,6 @@ export default class PlayList {
       console.log('删除:', i);
       this.unlinkSong(i);
     }
+    console.log('同步完成:', this.name);
   }
 }
