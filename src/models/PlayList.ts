@@ -73,5 +73,11 @@ export default class PlayList {
         console.log('处理失败', fileNameBeforeExt, e.message);
       }
     }
+    const filesInDir = fs.readdirSync(this.dir);
+    for (const i of filesInDir) {
+      if (fileNamesInPlaylist.includes(i)) continue;
+      console.log('删除:', i);
+      this.unlinkSong(i);
+    }
   }
 }
