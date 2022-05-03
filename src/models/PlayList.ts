@@ -4,6 +4,7 @@ import nease from 'NeteaseCloudMusicApi';
 import Pool from './Pool';
 
 const cookie = process.env.COOKIE;
+const downloadCookie = process.env.DOWNLOAD_COOKIE || cookie;
 
 export default class PlayList {
   public readonly id: number;
@@ -49,7 +50,7 @@ export default class PlayList {
       const album = song.pc?.alb || song.al.name;
       const picUrl = song.al.picUrl;
       let fileNameBeforeExt = `${artists.join(' ')} - ${title}`.replace(/[\/\\]/g, '_');
-      if(fileNameBeforeExt.length>200){
+      if (fileNameBeforeExt.length > 200) {
         fileNameBeforeExt = `${artists[0]} 等${artists.length}只 - ${title}`.replace(/[\/\\]/g, '_');
       }
 
@@ -63,7 +64,14 @@ export default class PlayList {
           this.linkSong(fileName, `${id}.${type}`);
         }
         else {
-          const download = (await nease.song_download_url({ cookie, id: song.id })).body.data as any;
+          const download = (await nease.song_download_url({
+            cookie: song.pc ? cookie : downloadCookie,
+            id: song.id,
+          })).body.data as any;
+          if (!download.type) {
+            console.log('灰了或者需要会员，无法下载:', fileNameBeforeExt);
+            continue;
+          }
           const url = download.url;
           const type = download.type.toLowerCase();
           const fileName = `${fileNameBeforeExt}.${type}`;

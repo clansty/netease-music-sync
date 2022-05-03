@@ -15,6 +15,8 @@
 - [x] Arch Linux 包部署
 - [ ] Docker 部署
 - [ ] 自带一个 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 或者 [YesPlayMusic](https://github.com/qier222/YesPlayMusic)，用本地文件作为缓存
+- [ ] 内置 [UnblockNeteaseMusic](https://github.com/UnblockNeteaseMusic/server) 下载灰掉的音乐
+- [x] 支持使用另一个 Cookie 来下载音乐
 
 ## 使用方法
 
