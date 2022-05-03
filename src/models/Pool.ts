@@ -23,6 +23,7 @@ export default class Pool {
     }
     if (!type) return null;
     const fileAbsPath = path.join(this.dir, `${id}.${type.toLowerCase()}`);
+    if (!fs.existsSync(fileAbsPath)) return null;
     if (!fs.statSync(fileAbsPath).size) {
       console.log('删除空文件', fileAbsPath);
       fs.unlinkSync(fileAbsPath);
