@@ -148,24 +148,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"app@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "app@workspace:."
-  dependencies:
-    "@types/node": ^17.0.31
-    "@types/prompts": ^2
-    NeteaseCloudMusicApi: ^4.5.12
-    dotenv: ^16.0.0
-    metaflac-js2: ^1.0.8
-    node-id3: ^0.2.3
-    prompts: ^2.4.2
-    sleep-promise: ^9.1.0
-    ts-node: ^10.7.0
-    tsc: ^2.0.4
-    typescript: ^4.6.4
-  languageName: unknown
-  linkType: soft
-
 "arg@npm:^4.1.0":
   version: 4.1.3
   resolution: "arg@npm:4.1.3"
@@ -1042,6 +1024,24 @@ __metadata:
   checksum: b8ffeb1e262eff7968fc90a2b6767b04cfd9842582a9d0ece0af7049537266e7b2506dfb1d107a32f06dd849ab2aea834d5830f7f4d0e5cb7d36e1ae55d021d9
   languageName: node
   linkType: hard
+
+"netease-music-sync@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "netease-music-sync@workspace:."
+  dependencies:
+    "@types/node": ^17.0.31
+    "@types/prompts": ^2
+    NeteaseCloudMusicApi: ^4.5.12
+    dotenv: ^16.0.0
+    metaflac-js2: ^1.0.8
+    node-id3: ^0.2.3
+    prompts: ^2.4.2
+    sleep-promise: ^9.1.0
+    ts-node: ^10.7.0
+    tsc: ^2.0.4
+    typescript: ^4.6.4
+  languageName: unknown
+  linkType: soft
 
 "netmask@npm:^2.0.1":
   version: 2.0.2

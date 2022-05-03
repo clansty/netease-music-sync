@@ -11,6 +11,7 @@ source=("${pkgname}::git+${url}"
         netease-login
         ${pkgname}.{conf,service})
 sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
+backup=("etc/${pkgname}.conf")
 
 pkgver(){
     cd "${srcdir}/${pkgname}"
