@@ -12,43 +12,29 @@ export default class Pool {
     }
   }
 
-  public exists(id: string | number) {
-    if (fs.existsSync(path.join(this.dir, id + '.flac'))) {
-      return 'flac';
+  public exists(id: string | number, type?: string) {
+    if (!type) {
+      const TYPES = ['flac', 'mp3', 'wav', 'wma', 'm4a', 'aac', 'ogg', 'ape', 'opus', 'aiff'];
+      for (const possibleType of TYPES) {
+        if (!fs.existsSync(path.join(this.dir, `${id}.${possibleType}`))) continue;
+        type = possibleType;
+        break;
+      }
     }
-    if (fs.existsSync(path.join(this.dir, id + '.mp3'))) {
-      return 'mp3';
+    if (!type) return null;
+    const fileAbsPath = path.join(this.dir, `${id}.${type.toLowerCase()}`);
+    if (!fs.statSync(fileAbsPath).size) {
+      console.log('删除空文件', fileAbsPath);
+      fs.unlinkSync(fileAbsPath);
+      return null;
     }
-    if (fs.existsSync(path.join(this.dir, id + '.wav'))) {
-      return 'wav';
-    }
-    if (fs.existsSync(path.join(this.dir, id + '.wma'))) {
-      return 'wma';
-    }
-    if (fs.existsSync(path.join(this.dir, id + '.m4a'))) {
-      return 'm4a';
-    }
-    if (fs.existsSync(path.join(this.dir, id + '.aac'))) {
-      return 'aac';
-    }
-    if (fs.existsSync(path.join(this.dir, id + '.ogg'))) {
-      return 'ogg';
-    }
-    if (fs.existsSync(path.join(this.dir, id + '.ape'))) {
-      return 'ape';
-    }
-    if (fs.existsSync(path.join(this.dir, id + '.opus'))) {
-      return 'opus';
-    }
-    if (fs.existsSync(path.join(this.dir, id + '.aiff'))) {
-      return 'aiff';
-    }
+    return type;
   }
 
   public async download(id: string | number, url: string, type: string,
                         title: string, artists: string[], album: string, picUrl: string) {
     const fileAbsPath = path.join(this.dir, `${id}.${type.toLowerCase()}`);
-    if (fs.existsSync(fileAbsPath))
+    if (this.exists(id, type))
       return;
     try {
       const fileStream = fs.createWriteStream(fileAbsPath);
