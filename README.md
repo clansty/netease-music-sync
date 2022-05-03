@@ -22,25 +22,25 @@
 
 1. 首先安装 `netease-music-sync` [AUR](https://aur.archlinux.org/packages/netease-music-sync) [凌莞源](https://pacman.ltd/x86_64/netease-music-sync)
 
-```bash
-yay -S netease-music-sync
-```
+   ```bash
+   yay -S netease-music-sync
+   ```
 
 2. 运行 `netease-login` 获取 cookies
 
 3. 编辑 `/etc/netease-music-sync.conf`，填入相关信息
 
-```bash
-sudo vi /etc/netease-music-sync.conf
-```
+   ```bash
+   sudo vi /etc/netease-music-sync.conf
+   ```
 
-歌单 ID 获取方法：在手机上分享歌单，URL 里就有 ID。或者在网页上打开，地址栏也有
+   歌单 ID 获取方法：在手机上分享歌单，URL 里就有 ID。或者在网页上打开，地址栏也有
 
 4. 启用服务
 
-```bash
-sudo systemctl enable --now netease-music-sync.service
-```
+   ```bash
+   sudo systemctl enable --now netease-music-sync.service
+   ```
 
 #### 以指定用户身份运行
 
