@@ -50,7 +50,7 @@ export default class PlayList {
       const album = song.pc?.alb || song.al.name;
       const picUrl = song.al.picUrl;
       let fileNameBeforeExt = `${artists.join(' ')} - ${title}`.replace(/[\/\\]/g, '_');
-      if (fileNameBeforeExt.length > 200) {
+      if (fileNameBeforeExt.length > 100) {
         fileNameBeforeExt = `${artists[0]} 等${artists.length}只 - ${title}`.replace(/[\/\\]/g, '_');
       }
 
