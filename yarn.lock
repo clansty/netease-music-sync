@@ -1040,6 +1040,8 @@ __metadata:
     ts-node: ^10.7.0
     tsc: ^2.0.4
     typescript: ^4.6.4
+  bin:
+    netease-music-sync: build/index.js
   languageName: unknown
   linkType: soft
 
