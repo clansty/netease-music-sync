@@ -56,6 +56,7 @@ export default class PlayList {
   private async uploadToChannel(fileName: string, title: string, performer: string, thumb: string, duration: number) {
     try {
       await this.telegramMessageIdMap.get(fileName);
+      return;
     } catch {}
     try {
       const result = await bot.sendAudio(this.telegramChannelId, path.join(this.dir, fileName), {
