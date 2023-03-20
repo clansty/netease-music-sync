@@ -7,4 +7,8 @@
   buildPhase = with pkgs; ''
     yarn build
   '';
+
+  nativeBuildInputs = attrs.buildInputs ++ (with pkgs; [
+    python3
+  ]);
 })

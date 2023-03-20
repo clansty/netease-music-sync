@@ -13,10 +13,12 @@
 - [x] 支持多个歌单
 - [ ] 歌灰了自动将本地有的文件（如果有）上传到音乐云盘
 - [x] Arch Linux 包部署
+- [x] NixOS Flake 部署
 - [ ] Docker 部署
 - [ ] 自带一个 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 或者 [YesPlayMusic](https://github.com/qier222/YesPlayMusic)，用本地文件作为缓存
 - [ ] 内置 [UnblockNeteaseMusic](https://github.com/UnblockNeteaseMusic/server) 下载灰掉的音乐
 - [x] 支持使用另一个 Cookie 来下载音乐
+- [x] 自动将音乐上传到 Telegram Channel
 
 ## 使用方法
 

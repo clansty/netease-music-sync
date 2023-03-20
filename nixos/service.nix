@@ -27,6 +27,8 @@ in
         DOWNLOAD_COOKIE = cfg.download-cookie;
         DIR = cfg.download-dir;
         PLAYLISTS = cfg.playlists;
+        TELEGRAM_CHANNELS = cfg.telegram-channels;
+        TELEGRAM_TOKEN = cfg.telegram-token;
       };
       serviceConfig = {
         User = "netease-music-sync";

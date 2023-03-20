@@ -25,5 +25,11 @@ with pkgs.lib;
     playlists = mkOption {
       type = types.str;
     };
+    telegram-token = mkOption {
+      type = types.str;
+    };
+    telegram-channels = mkOption {
+      type = types.str;
+    };
   };
 }
