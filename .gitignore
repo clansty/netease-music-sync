@@ -13,7 +13,6 @@ test/
 *.jar
 *.exe
 *.msi
-*.zip
 *.tgz
 *.log
 *.log.*
@@ -243,12 +242,6 @@ _pkginfo.txt
 *.appx
 *.appxbundle
 *.appxupload
-
-# Visual Studio cache files
-# files ending in .cache can be ignored
-*.[Cc]ache
-# but keep track of directories ending in .cache
-!?*.[Cc]ache/
 
 # Others
 ClientBin/
@@ -674,12 +667,6 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
-.pnp.*
 
 ### KDevelop4 template
 *.kdev4
@@ -731,6 +718,7 @@ Temporary Items
 config.yaml
 build
 .yarn/*
+!.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
