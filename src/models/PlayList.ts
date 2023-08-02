@@ -59,6 +59,7 @@ export default class PlayList {
       return;
     } catch {}
     try {
+      console.log("上传到 Telegram:", fileName);
       const result = await bot.sendAudio(this.telegramChannelId, path.join(this.dir, fileName), {
         title,
         performer,
@@ -134,7 +135,6 @@ export default class PlayList {
           this.linkSong(fileName, `${id}.${type}`);
         }
         if (this.telegramChannelId) {
-          console.log("上传到 Telegram:", fileName);
           await this.uploadToChannel(fileName, title, artists.join(" "), picUrl, Math.floor(durationMs / 1000));
         }
       } catch (e) {

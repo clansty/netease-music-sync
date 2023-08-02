@@ -29,6 +29,7 @@ in
         PLAYLISTS = cfg.playlists;
         TELEGRAM_CHANNELS = cfg.telegram-channels;
         TELEGRAM_TOKEN = cfg.telegram-token;
+        TELEGRAM_API_BASE = cfg.telegram-api-base;
       };
       serviceConfig = {
         User = "netease-music-sync";

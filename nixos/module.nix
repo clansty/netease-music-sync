@@ -31,5 +31,9 @@ with pkgs.lib;
     telegram-channels = mkOption {
       type = types.str;
     };
+    telegram-api-base = mkOption {
+      type = types.str;
+      default = "https://api.telegram.org";
+    };
   };
 }
