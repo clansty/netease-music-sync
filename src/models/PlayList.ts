@@ -7,7 +7,7 @@ import bot from "../providers/bot";
 
 const cookie = process.env.COOKIE;
 const downloadCookie = process.env.DOWNLOAD_COOKIE || cookie;
-const storePath = path.join(process.env.HOME, ".netease-music-sync");
+const storePath = process.env.STORE || path.join(process.env.HOME, ".netease-music-sync");
 
 export default class PlayList {
   public readonly id: number;
