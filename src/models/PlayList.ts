@@ -57,7 +57,7 @@ export default class PlayList {
     try {
       await this.telegramMessageIdMap.get(fileName);
       return;
-    } catch {}
+    } catch { }
     try {
       console.log("上传到 Telegram:", fileName);
       const result = await bot.sendAudio(this.telegramChannelId, path.join(this.dir, fileName), {
@@ -77,7 +77,7 @@ export default class PlayList {
     let messageId: number;
     try {
       messageId = await this.telegramMessageIdMap.get(fileName);
-    } catch {}
+    } catch { }
     try {
       await bot.deleteMessage(this.telegramChannelId, messageId);
       await this.telegramMessageIdMap.del(fileName);
@@ -143,6 +143,7 @@ export default class PlayList {
     }
     const filesInDir = fs.readdirSync(this.dir);
     for (const i of filesInDir) {
+      if (i === '@eaDir') continue;
       if (fileNamesInPlaylist.includes(i)) continue;
       console.log("删除:", i);
       this.unlinkSong(i);
