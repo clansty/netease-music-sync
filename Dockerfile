@@ -1,12 +1,14 @@
 FROM node:20-alpine as build
 RUN corepack enable
 
+RUN apk add alpine-sdk python3
+
 WORKDIR /app
 COPY .yarn .yarn
 COPY .yarnrc.yml .
 COPY package.json .
 COPY yarn.lock .
-RUN yarn install
+RUN yarn install --inline-builds
 
 COPY tsconfig.json .
 COPY src src
